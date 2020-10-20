@@ -4,6 +4,8 @@
 #include<stdlib.h>
 #include "Stack_C.h"
 
+// Stack.
+
 int isEmptyStack(struct Stack_C* stack) {
 	if (NULL == stack) {
 		return 1;
@@ -21,6 +23,18 @@ int initStack(struct Stack_C* stack) {
 	stack->tail = 0;
 	stack->size = 16;
 	stack->stack = (struct CheckerBoard**)malloc(sizeof(struct CheckerBoard*) * 16);
+}
+
+struct Stack_C* copyStack(struct Stack_C* stack) {
+	struct Stack_C* copy = (struct Stack_C*)malloc(sizeof(struct Stack_C));
+	copy->size = stack->size;
+	copy->tail = stack->tail;
+	copy->stack = (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard) * copy->size);
+	int cursor = 0;
+	for (; cursor < stack->tail; cursor++) {
+		copy->stack[cursor] = stack->stack[cursor];
+	}
+	return copy;
 }
 
 void extendStack(struct Stack_C* stack) {
@@ -107,7 +121,6 @@ void testStack() {
 	for (; cursor < 33; cursor++) {
 		struct CheckerBoard* checkerBoard = (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
 		initRandomCheckerBoard(3, 3, checkerBoard);
-		printf("%d \n", checkerBoard->height);
 		pushStack(stack, checkerBoard);
 		displayStack(stack);
 		if (cursor == 0) {
@@ -117,6 +130,9 @@ void testStack() {
 			free(temp);
 			printf("Length: %d\n", stack->tail);
 		}
+	}
+	for (cursor = 0; cursor < stack->tail; cursor++) {
+		printCheckerBoard(stack->stack[cursor]);
 	}
 	printf("Pop: %$#X\n", popStack(stack));
 	printf("Length: %d\n", stack->tail);

@@ -4,11 +4,15 @@
 
 #include "CheckerBoard.h"
 
+// Stack.
+
 struct Stack_C {
 	int tail;
 	int size;
 	struct CheckerBoard** stack;
 };
+
+struct Stack_C* copyStack(struct Stack_C* stack);
 
 int isEmptyStack(struct Stack_C* stack);
 
