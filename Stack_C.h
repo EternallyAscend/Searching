@@ -1,15 +1,18 @@
-#pragma once
-#ifndef STACK_C_H
-#define STACK_C_H
+//
+// Created by MagicBook on 2020/10/22.
+//
+
+#ifndef AI_SEARCHING_STACK_C_H
+#define AI_SEARCHING_STACK_C_H
 
 #include "CheckerBoard.h"
 
 // Stack.
 
 struct Stack_C {
-	int tail;
-	int size;
-	struct CheckerBoard** stack;
+    int tail;
+    int size;
+    struct CheckerBoard** stack;
 };
 
 struct Stack_C* copyStack(struct Stack_C* stack);
@@ -30,4 +33,4 @@ void displayStack(struct Stack_C* stack);
 
 void testStack();
 
-#endif
+#endif //AI_SEARCHING_STACK_C_H

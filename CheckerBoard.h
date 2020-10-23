@@ -1,21 +1,24 @@
-#pragma once
-#ifndef CHECKER_BOARDER_H
-#define CHECKER_BOARDER_H
+//
+// Created by MagicBook on 2020/10/22.
+//
+
+#ifndef AI_SEARCHING_CHECKERBOARD_H
+#define AI_SEARCHING_CHECKERBOARD_H
 
 struct CheckerBoard {
-	int length; // Length of the checkerboard.
-	int height; // Height of the checkerboard.
-	int *checkerBoard; // Store number position. 
-	int zeroPosition; // Store where is empty.
-	int lastModified; // Store which moved before.
+    int length; // Length of the checkerboard.
+    int height; // Height of the checkerboard.
+    int *checkerBoard; // Store number position.
+    int zeroPosition; // Store where is empty.
+    int lastModified; // Store which moved before.
 };
 
 struct Method {
-	int depth; // Store current searching depth.
-	int score; // Using it in A or A* Algorithm.
-	int nodeCounter; // Record all reached nodes.
-	struct CheckerBoard *checkerBoard; // Current.
-	struct Stack_C *method; // History with current.
+    int depth; // Store current searching depth.
+    int score; // Using it in A or A* Algorithm.
+    int nodeCounter; // Record all reached nodes.
+    struct CheckerBoard *checkerBoard; // Current.
+    struct Stack_C *method; // History with current.
 };
 
 void initEmptyMethod(struct Method* method);
@@ -108,4 +111,4 @@ void findResultByHeuristic(struct CheckerBoard* checkerBoard, struct CheckerBoar
 
 void findResultByRandom(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
 
-#endif
+#endif //AI_SEARCHING_CHECKERBOARD_H

@@ -1,13 +1,8 @@
-#pragma once
-#ifndef RANDOM_H
-#define RANDOM_H
+//
+// Created by MagicBook on 2020/10/22.
+//
 
-int getRandomIntNumber();
+#ifndef AI_SEARCHING_RANDOM_H
+#define AI_SEARCHING_RANDOM_H
 
-int getRandomIntNumberByRange(int range);
-
-int* getRandomIntArray(int size);
-
-int* getRandomIntArrayByRange(int size, int range);
-
-#endif
+#endif //AI_SEARCHING_RANDOM_H
