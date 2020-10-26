@@ -1,8 +1,7 @@
 //
-// Created by MagicBook on 2020/10/22.
+// Created by MagicBook on 2020/10/24.
 //
 
-#pragma once
 #ifndef AI_SEARCHING_LAYER_H
 #define AI_SEARCHING_LAYER_H
 
@@ -12,9 +11,11 @@ struct Layer {
     int* layer;
 };
 
-void initLayer(struct Layer* layer);
+struct Layer* initLayer();
 
 int isEmptyLayer(struct Layer* layer);
+
+void extendLayer(struct Layer* layer);
 
 void addLayer(struct Layer* layer, int index);
 
@@ -23,6 +24,8 @@ void pushLayer(struct Layer* layer);
 int popLayer(struct Layer* layer);
 
 int getLayer(struct Layer* layer);
+
+void destroyLayer(struct Layer* layer);
 
 int getLayerPosition(struct Layer* layer, int index);
 

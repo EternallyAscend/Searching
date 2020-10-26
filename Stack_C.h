@@ -1,5 +1,5 @@
 //
-// Created by MagicBook on 2020/10/22.
+// Created by MagicBook on 2020/10/24.
 //
 
 #ifndef AI_SEARCHING_STACK_C_H
@@ -7,7 +7,7 @@
 
 #include "CheckerBoard.h"
 
-// Stack.
+// Stack_C
 
 struct Stack_C {
     int tail;
@@ -15,11 +15,13 @@ struct Stack_C {
     struct CheckerBoard** stack;
 };
 
-struct Stack_C* copyStack(struct Stack_C* stack);
-
 int isEmptyStack(struct Stack_C* stack);
 
-int initStack(struct Stack_C* stack);
+struct Stack_C* copyStack(struct Stack_C* stack);
+
+int inStack(struct Stack_C* stack, struct CheckerBoard* checkerBoard);
+
+struct Stack_C* initStack();
 
 void extendStack(struct Stack_C* stack);
 
@@ -28,6 +30,8 @@ int pushStack(struct Stack_C* stack, struct CheckerBoard* checkerBoard);
 struct CheckerBoard* popStack(struct Stack_C* stack);
 
 void destroyStack(struct Stack_C* stack);
+
+void destroyStackOnly(struct Stack_C* stack);
 
 void displayStack(struct Stack_C* stack);
 

@@ -1,5 +1,5 @@
 //
-// Created by MagicBook on 2020/10/22.
+// Created by MagicBook on 2020/10/24.
 //
 
 #ifndef AI_SEARCHING_RANDOM_H

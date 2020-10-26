@@ -1,5 +1,5 @@
 //
-// Created by MagicBook on 2020/10/22.
+// Created by MagicBook on 2020/10/24.
 //
 
 #ifndef AI_SEARCHING_MINHEAP_C_H
@@ -17,7 +17,7 @@ struct MinHeap_C {
 
 int isEmptyMinHeap(struct MinHeap_C* minHeap);
 
-void initMinHeap(struct MinHeap_C* minHeap);
+struct MinHeap_C* initMinHeap();
 
 void extendMinHeap(struct MinHeap_C* minHeap);
 

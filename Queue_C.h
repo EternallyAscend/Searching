@@ -1,5 +1,5 @@
 //
-// Created by MagicBook on 2020/10/22.
+// Created by MagicBook on 2020/10/24.
 //
 
 #ifndef AI_SEARCHING_QUEUE_C_H
@@ -16,7 +16,7 @@ struct Queue_C {
 
 int isEmptyQueue(struct Queue_C* queue);
 
-int initQueue(struct Queue_C* queue);
+struct Queue_C* initQueue();
 
 void extendQueue(struct Queue_C* queue);
 

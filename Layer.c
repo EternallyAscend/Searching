@@ -1,22 +1,33 @@
 //
-// Created by MagicBook on 2020/10/22.
+// Created by MagicBook on 2020/10/24.
 //
-#include<stdio.h>
-#include<stdlib.h>
-#include"Layer.h"
 
-void initLayer(struct Layer* layer) {
-    layer->size = 16;
-    layer->tail = 1;
-    layer->layer = (int*)malloc(sizeof(int) * 16);
-    layer->layer[0] = 1;
+#include <stdio.h>
+#include <stdlib.h>
+#include "Layer.h"
+
+//struct Layer {
+//    int size;
+//    int tail;
+//    int* layer;
+//};
+
+struct Layer* initLayer() {
+    struct Layer* pointer = (struct Layer*)malloc(sizeof(struct Layer));
+    pointer->size = 16;
+    pointer->tail = 1;
+    pointer->layer = (int*)malloc(sizeof(int) * 16);
+    pointer->layer[0] = 1;
+    pointer->layer[1] = 0;
+    return pointer;
 }
 
 int isEmptyLayer(struct Layer* layer) {
     if (NULL == layer) {
         return 1;
     }
-    else if (NULL == layer->layer) {
+    if (NULL == layer->layer) {
+        free(layer);
         return 1;
     }
     return 0;
@@ -45,7 +56,7 @@ void addLayer(struct Layer* layer, int index) {
     if (layer->size - 1 == layer->tail) {
         extendLayer(layer);
     }
-    layer->layer[layer->tail++] = index;
+    layer->layer[++layer->tail] = index;
 }
 
 void pushLayer(struct Layer* layer) {
@@ -63,13 +74,6 @@ int getLayer(struct Layer* layer) {
     return layer->tail;
 }
 
-int getLayerPosition(struct Layer* layer, int index) {
-    if (isEmptyLayer(layer)) {
-        return -1;
-    }
-    return layer->layer[index - 1];
-}
-
 void destroyLayer(struct Layer* layer) {
     if (NULL == layer) {
         return;
@@ -80,3 +84,6 @@ void destroyLayer(struct Layer* layer) {
     free(layer);
 }
 
+int getLayerPosition(struct Layer* layer, int index) {
+    return layer->layer[index];
+}

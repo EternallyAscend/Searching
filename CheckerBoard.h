@@ -1,9 +1,18 @@
 //
-// Created by MagicBook on 2020/10/22.
+// Created by MagicBook on 2020/10/24.
 //
+
+#pragma warning(disable:4996)
 
 #ifndef AI_SEARCHING_CHECKERBOARD_H
 #define AI_SEARCHING_CHECKERBOARD_H
+
+#include "Layer.h"
+#include "Method.h"
+#include "Random.h"
+#include "Stack_C.h"
+#include "Queue_C.h"
+#include "MinHeap_C.h"
 
 struct CheckerBoard {
     int length; // Length of the checkerboard.
@@ -13,51 +22,45 @@ struct CheckerBoard {
     int lastModified; // Store which moved before.
 };
 
-struct Method {
-    int depth; // Store current searching depth.
-    int score; // Using it in A or A* Algorithm.
-    int nodeCounter; // Record all reached nodes.
-    struct CheckerBoard *checkerBoard; // Current.
-    struct Stack_C *method; // History with current.
-};
-
-void initEmptyMethod(struct Method* method);
-
-int isNullMethod(struct Method* method);
-
-struct Method* copyMethod(struct Method* method);
-
-int destroyMethod(struct Method* method);
-
-// Compare different method for sort by minHeap. -1 => left < right, 0 => equal, 1 => left > right.
-int compareMethod(struct Method* left, struct Method* right);
-
-// Copy a new checkerboard with same situation.
-struct CheckerBoard* copyCheckerBoard(struct CheckerBoard* checkerBoard);
-
+// If checkerBoard->checkerBoard is NULL, it will free the checkerBoard.
 int checkNullCheckerBoard(struct CheckerBoard* checkerBoard);
 
-// Check whether two checkerboard are equal, wrong input => -1, not equal => 0, equal => 1.
-int checkEqualCheckerBoard(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+// Destroy the checkerBoard and the pointer.
+void destroyCheckerBoard(struct CheckerBoard* checkerBoard);
 
-// Judge whether two checkerboard are same size, wrong input => -1, not equal => 0, equal => 1.
-int judgeNotNullptrAndEqualSize(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
-
-// Count different number of two checkerboard. Wrong input => -1.
-int countDifferenceOfCheckerBoard(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+struct CheckerBoard* copyCheckerBoard(struct CheckerBoard* checkerBoard);
 
 // Find position of empty block. Wrong input => -1;
-void searchZeroInCheckerBoard(struct CheckerBoard* checkerBoard);
+int searchZeroInCheckerBoard(struct CheckerBoard* checkerBoard);
 
-// Init the checkerboard without any useful value.
-void initCheckerBoard(int length, int height, struct CheckerBoard* checkerBoard);
+// Init new empty checkerBoard with `struct CheckerBoard* = initCheckerBoard(length, height);`
+struct CheckerBoard* initEmptyCheckerBoard(int length, int height);
 
 // Generate checkerboard with random value.
-void initRandomCheckerBoard(int length, int height, struct CheckerBoard* checkerBoard);
+struct CheckerBoard* initRandomCheckerBoard(int length, int height);
+
+// Calculate the reverse pair in a checkerBoard. Wrong => -1.
+int calculateReversePair(struct CheckerBoard* checkerBoard);
+
+// Generate a paired checkerBoard from an existed one.
+struct CheckerBoard* initRandomCheckerBoardWithOneExist(struct CheckerBoard* checkerBoard);
+
+// Generate a pair of checkerBoard with random value.
+void initTwoRandomCheckerBoard(int length, int height, struct CheckerBoard* origin, struct CheckerBoard* target);
+
+// Judge whether two checkerboard are same size, wrong input => -1, not equal => 0, equal => 1.
+int judgeNotNullptrAndEqualSize(struct CheckerBoard* origin, struct CheckerBoard* target);
+
+// Check whether two checkerboard are equal, wrong input => -1, not equal => 0, equal => 1.
+int checkEqualCheckerBoard(struct CheckerBoard* origin, struct CheckerBoard* target);
+
+// Count different number of two checkerboard. Wrong input => -1.
+int countDifferenceOfCheckerBoard(struct CheckerBoard* origin, struct CheckerBoard* target);
 
 // Print the checkerboard.
 void printCheckerBoard(struct CheckerBoard* checkerBoard);
 
+// The x and y is from range(0, length) and range(0, height);
 void setValueInCheckerBoard(int x, int y, int value, struct CheckerBoard* checkerBoard);
 
 // Input value after init the checkerboard.
@@ -69,11 +72,10 @@ int* getMoveAblePointsAndTargets(struct CheckerBoard* checkerBoard);
 // Move the empty block to target.
 void moveInCheckerBoard(struct CheckerBoard* checkerBoard, int target);
 
-void destroyCheckerBoard(struct CheckerBoard* checkerBoard);
+// ======== Method and Test. ========
+int findResultBacktracking(struct CheckerBoard* origin, struct CheckerBoard* target, struct Stack_C* stack);
 
-int findResultBacktracking(struct CheckerBoard* checkerBoard, struct CheckerBoard* target, struct Stack_C* stack);
-
-void findResultByBacktracking(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+void findResultByBacktracking(struct CheckerBoard* origin, struct CheckerBoard* target);
 
 void testBacktracking_8();
 
@@ -82,6 +84,10 @@ void testBacktracking_15();
 int findResultDFS(struct CheckerBoard* checkerBoard, struct CheckerBoard* target, struct Stack_C* stack);
 
 void findResultByDFS(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+
+void testDFS_8();
+
+void testDFS_15();
 
 int findResultBFS(struct CheckerBoard* target, struct Queue_C* queue, struct Layer* layer, struct Stack_C* stack);
 
@@ -93,22 +99,24 @@ void testBFS_15();
 
 int aAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
 
+void findResultHeuristicAAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+
 void testA_8();
 
 void testA_15();
 
 int aStarAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
 
+void findResultHeuristicAStarAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+
 void testAStar_8();
 
 void testAStar_15();
 
-void findResultHeuristicAAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
-
-void findResultHeuristicAStarAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
-
 void findResultByHeuristic(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
 
 void findResultByRandom(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+
+void testing();
 
 #endif //AI_SEARCHING_CHECKERBOARD_H

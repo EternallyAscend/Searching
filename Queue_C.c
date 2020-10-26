@@ -1,32 +1,38 @@
 //
-// Created by MagicBook on 2020/10/22.
+// Created by MagicBook on 2020/10/24.
 //
 
-#pragma warning(disable:4996)
-#include<math.h>
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "Queue_C.h"
+
+// Queue_C
+
+//struct Queue_C {
+//    int head;
+//    int tail;
+//    int size;
+//    struct CheckerBoard** queue;
+//};
 
 int isEmptyQueue(struct Queue_C* queue) {
     if (NULL == queue) {
         return 1;
     }
     if (NULL == queue->queue) {
-        return 1;
-    }
-    if (0 == queue->tail && 0 == queue->head) {
+        free(queue);
         return 1;
     }
     return 0;
 }
 
-int initQueue(struct Queue_C* queue) {
-    queue->head = 0;
-    queue->tail = 0;
-    queue->size = 16;
-    queue->queue = (struct Queue_C**)malloc(sizeof(struct Queue_C*) * 16);
-    return 0;
+struct Queue_C* initQueue() {
+    struct Queue_C* pointer = (struct Queue_C*)malloc(sizeof(struct Queue_C));
+    pointer->head = 0;
+    pointer->tail = 0;
+    pointer->size = 16;
+    pointer->queue = (struct CheckerBoard**)malloc(sizeof(struct CheckerBoard*) * 16);
+    return pointer;
 }
 
 void extendQueue(struct Queue_C* queue) {
@@ -55,8 +61,7 @@ void extendQueue(struct Queue_C* queue) {
     queue->size = newSize;
 }
 
-int pushQueue(struct Queue_C* queue, struct CheckerBoard* value)
-{
+int pushQueue(struct Queue_C* queue, struct CheckerBoard* value) {
     if (NULL == queue) {
         return -65535;
     }
@@ -93,7 +98,7 @@ struct CheckerBoard* popQueue(struct Queue_C* queue) {
     if (NULL == queue->queue) {
         return NULL;
     }
-    int result;
+    struct CheckerBoard* result;
     if (queue->head < queue->tail) {
         result = queue->queue[queue->head++];
         if (queue->head == queue->tail) {
@@ -115,30 +120,11 @@ struct CheckerBoard* popQueue(struct Queue_C* queue) {
 }
 
 void destroyQueue(struct Queue_C* queue) {
-    if (NULL == queue) {
+    if (isEmptyQueue(queue)) {
         return;
     }
-    if (NULL == queue->queue) {
-        return;
-    }
-    else {
-        int cursor = 0;
-        struct CheckerBoard* temp = NULL;
-        while (1) {
-            if (isEmptyQueue(queue)) {
-                break;
-            }
-            temp = popQueue(queue);
-            if (NULL == temp) {
-                break;
-            }
-            else {
-                destroyCheckerBoard(temp);
-                // free(temp);
-            }
-        }
-        free(queue->queue);
-    }
+    free(queue->queue);
+    free(queue);
 }
 
 void displayQueue(struct Queue_C* queue) {
@@ -152,16 +138,16 @@ void displayQueue(struct Queue_C* queue) {
         if (queue->head < queue->tail) {
             printf("Length: %d\n", queue->tail - queue->head);
             for (cursor = queue->head; cursor < queue->tail; cursor++) {
-                printf("%#X ", queue->queue[cursor]);
+                printf("0x%p ", queue->queue[cursor]);
             }
         }
         else {
             printf("Length: %d\n", queue->size - queue->head + queue->tail);
             for (cursor = queue->head; cursor < queue->size; cursor++) {
-                printf("%#X ", queue->queue[cursor]);
+                printf("0x%p ", queue->queue[cursor]);
             }
             for (cursor = 0; cursor < queue->tail; cursor++) {
-                printf("%#X ", queue->queue[cursor]);
+                printf("0x%p ", queue->queue[cursor]);
             }
         }
         printf("\n");
@@ -172,12 +158,10 @@ void displayQueue(struct Queue_C* queue) {
 }
 
 void testQueue() {
-    struct Queue_C* queue = (struct Queue_C*)malloc(sizeof(struct Queue_C));
-    initQueue(queue);
+    struct Queue_C* queue = initQueue();
     int cursor = 0;
     for (; cursor < 33; cursor++) {
-        struct CheckerBoard* checkerBoard = (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
-        initRandomCheckerBoard(3, 3, checkerBoard);
+        struct CheckerBoard* checkerBoard = initRandomCheckerBoard(3, 3);
         pushQueue(queue, checkerBoard);
     }
     displayQueue(queue);
@@ -189,12 +173,9 @@ void testQueue() {
     }
     displayQueue(queue);
     destroyQueue(queue);
-    free(queue);
-    queue = (struct Queue_C*)malloc(sizeof(struct Queue_C));
-    initQueue(queue);
+    queue = initQueue();
     for (cursor = 0; cursor < 15; cursor++) {
-        struct CheckerBoard* checkerBoard = (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
-        initRandomCheckerBoard(3, 3, checkerBoard);
+        struct CheckerBoard* checkerBoard = initRandomCheckerBoard(3, 3);
         pushQueue(queue, checkerBoard);
     }
     for (cursor = 0; cursor < 10; cursor++) {
@@ -204,8 +185,7 @@ void testQueue() {
     }
     displayQueue(queue);
     for (cursor = 0; cursor < 60; cursor++) {
-        struct CheckerBoard* checkerBoard = (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
-        initRandomCheckerBoard(3, 3, checkerBoard);
+        struct CheckerBoard* checkerBoard = initRandomCheckerBoard(3, 3);
         pushQueue(queue, checkerBoard);
     }
     displayQueue(queue);
@@ -218,5 +198,4 @@ void testQueue() {
     }
     displayQueue(queue);
     destroyQueue(queue);
-    free(queue);
 }
