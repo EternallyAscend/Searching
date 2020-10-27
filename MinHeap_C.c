@@ -114,9 +114,9 @@ struct Method* popMinHeap(struct MinHeap_C* minHeap) {
                 rightValue = minHeap->minHeap[(current << 1) + 2];
             }
         }
-        if (left || right) {
-            if (right) {
-                if (leftValue > rightValue) {
+        if (1 == left || 1 == right) {
+            if (1 == right) {
+                if (1 == compareMethod(leftValue, rightValue)) {
                     if (-1 == compareMethod(rightValue, minHeap->minHeap[current])) {
                         // printf("Exchange %d and %d.\n", rightValue, minHeap->minHeap[current]);
                         struct Method* temporary = minHeap->minHeap[current];

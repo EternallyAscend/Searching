@@ -39,7 +39,7 @@ void extendQueue(struct Queue_C* queue) {
     int cursor = 0;
     int newSize = queue->size;
     newSize = newSize << 1;
-    int *newArray = (struct Queue_C**)malloc(sizeof(struct Queue_C*) * newSize);
+    struct CheckerBoard** newArray = (struct CheckerBoard**)malloc(sizeof(struct CheckerBoard*) * newSize);
     if (queue->head >= queue->tail) {
         for (; cursor + queue->head < queue->size; cursor++) {
             newArray[cursor] = queue->queue[queue->head + cursor];

@@ -46,7 +46,7 @@ int calculateReversePair(struct CheckerBoard* checkerBoard);
 struct CheckerBoard* initRandomCheckerBoardWithOneExist(struct CheckerBoard* checkerBoard);
 
 // Generate a pair of checkerBoard with random value.
-void initTwoRandomCheckerBoard(int length, int height, struct CheckerBoard* origin, struct CheckerBoard* target);
+void initTwoRandomCheckerBoard(int length, int height, struct CheckerBoard** origin, struct CheckerBoard** target);
 
 // Judge whether two checkerboard are same size, wrong input => -1, not equal => 0, equal => 1.
 int judgeNotNullptrAndEqualSize(struct CheckerBoard* origin, struct CheckerBoard* target);
