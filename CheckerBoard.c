@@ -314,24 +314,26 @@ void setValueInCheckerBoard(int x, int y, int value, struct CheckerBoard* checke
 }
 
 // Input value after init the checkerboard.
-void inputValueInitCheckerBoard(struct CheckerBoard* checkerBoard) {
+void inputValueInitCheckerBoard(struct CheckerBoard** checkerBoard) {
     int length;
     int height;
-    if (checkNullCheckerBoard(checkerBoard)) {
-        scanf("Please input length and height: %d %d", &length, &height);
-        checkerBoard = initEmptyCheckerBoard(length, height);
+    if (checkNullCheckerBoard(*checkerBoard)) {
+//        printf("Empty pointer.\n");
+        printf("Please input length and height: ");
+        scanf("%d %d", &length, &height);
+        *checkerBoard = initEmptyCheckerBoard(length, height);
     }
     else {
-        length = checkerBoard->length;
-        height = checkerBoard->height;
+        length = (*checkerBoard)->length;
+        height = (*checkerBoard)->height;
     }
     int cursor = 0;
     for (; cursor < length * height; cursor++) {
-        printf("\nInput Line: %d, Row: %d: ", cursor / length + 1, cursor % length + 1);
-        scanf("%d", &checkerBoard->checkerBoard[cursor]);
+        printf("Input Line: %d, Row: %d: ", cursor / length + 1, cursor % length + 1);
+        scanf("%d", &(*checkerBoard)->checkerBoard[cursor]);
     }
-    searchZeroInCheckerBoard(checkerBoard);
-    checkerBoard->lastModified = -1;
+    searchZeroInCheckerBoard(*checkerBoard);
+    (*checkerBoard)->lastModified = -1;
 }
 
 // Get the block which can be moved. Need free after using.
@@ -732,6 +734,7 @@ int aAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target) {
 
 void findResultHeuristicAAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target) {
 //    unsigned long long int local = 0;
+    struct Stack_C* stack = initStack();
     struct MinHeap_C* minHeap = initMinHeap();
     // struct CheckerBoard* checkerBoard = NULL;
     // struct CheckerBoard* target = NULL;
@@ -763,6 +766,7 @@ void findResultHeuristicAAlgorithm(struct CheckerBoard* checkerBoard, struct Che
 //                printf("Finished.\n");
                 destroyMethod(temporary);
                 pushStack(method->stack, temp);
+                pushStack(stack, temp);
                 method->checkerBoard = temp;
                 checkerBoard = temp;
                 break;
@@ -784,6 +788,8 @@ void findResultHeuristicAAlgorithm(struct CheckerBoard* checkerBoard, struct Che
                 temporary = copyMethod(method);
 //                displayStack(temporary->stack);
                 pushStack(temporary->stack, temp);
+                // Push here.
+                pushStack(stack, temp);
 //                displayStack(temporary->stack);
                 temporary->depth++;
                 temporary->checkerBoard = temp;
@@ -803,6 +809,12 @@ void findResultHeuristicAAlgorithm(struct CheckerBoard* checkerBoard, struct Che
     int cursor = 0;
     for (; cursor < method->stack->tail; cursor++) {
         printCheckerBoard(method->stack->stack[cursor]);
+    }
+    for(cursor = 0; cursor < stack->tail; cursor++) {
+        if (NULL != stack->stack[cursor]) {
+            destroyCheckerBoard(stack->stack[cursor]);
+            stack->stack[cursor] = NULL;
+        }
     }
     // while (0 == isEmptyMinHeap(minHeap)) {
     // 	struct Method* me = popMinHeap(minHeap);
@@ -978,6 +990,7 @@ void findResultHeuristicAStarAlgorithmOld(struct CheckerBoard* checkerBoard, str
 
 void findResultHeuristicAStarAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target) {
 //    unsigned long long int local = 0;
+    struct Stack_C* stack = initStack();
     struct MinHeap_C* minHeap = initMinHeap();
     // struct CheckerBoard* checkerBoard = NULL;
     // struct CheckerBoard* target = NULL;
@@ -1014,6 +1027,7 @@ void findResultHeuristicAStarAlgorithm(struct CheckerBoard* checkerBoard, struct
 //                printf("Finished.\n");
                 destroyMethod(temporary);
                 pushStack(method->stack, temp);
+                pushStack(stack, temp);
                 method->checkerBoard = temp;
                 checkerBoard = temp;
                 break;
@@ -1035,6 +1049,7 @@ void findResultHeuristicAStarAlgorithm(struct CheckerBoard* checkerBoard, struct
                 temporary = copyMethod(method);
 //                displayStack(temporary->stack);
                 pushStack(temporary->stack, temp);
+                pushStack(stack, temp);
 //                displayStack(temporary->stack);
                 temporary->depth++;
                 temporary->checkerBoard = temp;
@@ -1061,6 +1076,7 @@ void findResultHeuristicAStarAlgorithm(struct CheckerBoard* checkerBoard, struct
 //    printf(" A* algorithm times: %lld.", local);
 //    displayStack(method->stack);
     printf("\nLength of method: %d.\n", method->depth);
+    echoResult(method->stack);
 //    int cursor = 0;
 //    for (; cursor < method->stack->tail; cursor++) {
 //        printCheckerBoard(method->stack->stack[cursor]);
@@ -1083,6 +1099,13 @@ void findResultHeuristicAStarAlgorithm(struct CheckerBoard* checkerBoard, struct
 
 //    printf("End.\n");
     destroyMinHeap(minHeap);
+    int cursor = 0;
+    for(; cursor < stack->tail; cursor++) {
+        if (NULL != stack->stack[cursor]) {
+            destroyCheckerBoard(stack->stack[cursor]);
+            stack->stack[cursor] = NULL;
+        }
+    }
     aStar = 0;
 }
 
@@ -1150,5 +1173,69 @@ void testing() {
     testA_15();
     testAStar_8();
     testAStar_15();
+    exit(0);
 }
 
+void testBackTracking() {
+    testBacktracking_8();
+    exit(0);
+}
+
+void testDFS() {
+    testDFS_8();
+    exit(0);
+}
+
+void testBFS() {
+    testBFS_8();
+    exit(0);
+}
+
+void testA() {
+    testA_8();
+    testA_15();
+    exit(0);
+}
+
+void testAStar() {
+    testAStar_8();
+    testAStar_15();
+    exit(0);
+}
+
+void testInputAStar() {
+    struct CheckerBoard* origin = NULL; // (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
+    // struct CheckerBoard* target = NULL; // (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
+    printf("Please input checkerboard 1:\n");
+    inputValueInitCheckerBoard(&origin);
+    struct CheckerBoard* target = initEmptyCheckerBoard(origin->length, origin->height);
+    printf("Please input checkerboard 2:\n");
+    inputValueInitCheckerBoard(&target);
+    int left = calculateReversePair(origin) % 2;
+    int right = calculateReversePair(target) % 2;
+    while (left != right) {
+        inputValueInitCheckerBoard(&target);
+        right = calculateReversePair(target) % 2;
+    }
+    findResultHeuristicAStarAlgorithm(origin, target);
+}
+
+void testRandomAStar() {
+    struct CheckerBoard *origin = NULL;
+    struct CheckerBoard *target = NULL;
+    initTwoRandomCheckerBoard(3, 3, &origin, &target);
+    printCheckerBoard(origin);
+    printCheckerBoard(target);
+    findResultHeuristicAStarAlgorithm(origin, target);
+    exit(0);
+}
+
+void echoResult(struct Stack_C* stack) {
+    if (isEmptyStack(stack)) {
+        return;
+    }
+    int cursor = 0;
+    for (; cursor < stack->tail; cursor++) {
+        printCheckerBoard(stack->stack[cursor]);
+    }
+}

@@ -64,7 +64,7 @@ void printCheckerBoard(struct CheckerBoard* checkerBoard);
 void setValueInCheckerBoard(int x, int y, int value, struct CheckerBoard* checkerBoard);
 
 // Input value after init the checkerboard.
-void inputValueInitCheckerBoard(struct CheckerBoard* checkerBoard);
+void inputValueInitCheckerBoard(struct CheckerBoard** checkerBoard);
 
 // Get the block which can be moved.
 int* getMoveAblePointsAndTargets(struct CheckerBoard* checkerBoard);
@@ -118,5 +118,21 @@ void findResultByHeuristic(struct CheckerBoard* checkerBoard, struct CheckerBoar
 void findResultByRandom(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
 
 void testing();
+
+void testBackTracking();
+
+void testDFS();
+
+void testBFS();
+
+void testA();
+
+void testAStar();
+
+void testInputAStar();
+
+void testRandomAStar();
+
+void echoResult(struct Stack_C* stack);
 
 #endif //AI_SEARCHING_CHECKERBOARD_H
