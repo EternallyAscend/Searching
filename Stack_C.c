@@ -125,6 +125,7 @@ void destroyStackOnly(struct Stack_C* stack) {
         return;
     }
     if (NULL == stack->stack) {
+        free(stack);
         return;
     }
     free(stack->stack);
