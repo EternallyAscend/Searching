@@ -131,10 +131,6 @@ void displayQueue(struct Queue_C* queue) {
     if (isEmptyQueue(queue) == 0) {
         int cursor;
         printf("\nHead: %d, tail: %d\n", queue->head, queue->tail);
-        // for (cursor = 0; cursor < queue->size; cursor++) {
-        // 	printf("%d ", queue->queue[cursor]);
-        // }
-        // printf("\n");
         if (queue->head < queue->tail) {
             printf("Length: %d\n", queue->tail - queue->head);
             for (cursor = queue->head; cursor < queue->tail; cursor++) {

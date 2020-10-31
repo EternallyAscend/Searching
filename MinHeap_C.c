@@ -63,7 +63,6 @@ void pushMinHeap(struct MinHeap_C* minHeap, struct Method* value) {
                 return;
             }
             if (-1 == status) {
-//            if (minHeap->minHeap[current] < minHeap->minHeap[(current - 1) >> 1]) {
                 struct Method* temporary = minHeap->minHeap[current];
                 minHeap->minHeap[current] = minHeap->minHeap[(current - 1) >> 1];
                 minHeap->minHeap[(current - 1) >> 1] = temporary;
@@ -118,7 +117,6 @@ struct Method* popMinHeap(struct MinHeap_C* minHeap) {
             if (1 == right) {
                 if (1 == compareMethod(leftValue, rightValue)) {
                     if (-1 == compareMethod(rightValue, minHeap->minHeap[current])) {
-                        // printf("Exchange %d and %d.\n", rightValue, minHeap->minHeap[current]);
                         struct Method* temporary = minHeap->minHeap[current];
                         minHeap->minHeap[current] = minHeap->minHeap[(current << 1) + 2];
                         minHeap->minHeap[(current << 1) + 2] = temporary;
@@ -130,7 +128,6 @@ struct Method* popMinHeap(struct MinHeap_C* minHeap) {
                 }
                 else {
                     if (-1 == compareMethod(leftValue, minHeap->minHeap[current])) {
-                        // printf("Exchange %d and %d.\n", leftValue, minHeap->minHeap[current]);
                         struct Method* temporary = minHeap->minHeap[current];
                         minHeap->minHeap[current] = minHeap->minHeap[(current << 1) + 1];
                         minHeap->minHeap[(current << 1) + 1] = temporary;
@@ -143,7 +140,6 @@ struct Method* popMinHeap(struct MinHeap_C* minHeap) {
             }
             else {
                 if (-1 == compareMethod(leftValue, minHeap->minHeap[current])) {
-                    // printf("Exchange %d and %d.\n", leftValue, minHeap->minHeap[current]);
                     struct Method* temporary = minHeap->minHeap[current];
                     minHeap->minHeap[current] = minHeap->minHeap[(current << 1) + 1];
                     minHeap->minHeap[(current << 1) + 1] = temporary;
@@ -155,8 +151,6 @@ struct Method* popMinHeap(struct MinHeap_C* minHeap) {
             break;
         }
     }
-    // displayMinHeap(minHeap);
-    // printf("Pop: %#X\n", result);
     return result;
 
 }
@@ -215,4 +209,3 @@ void testMinHeap() {
     printf("\n--");
 }
 
-#include "MinHeap_C.h"
