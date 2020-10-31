@@ -126,28 +126,6 @@ int calculateReversePair(struct CheckerBoard* checkerBoard) {
             }
         }
     }
-//    temporary[cursor + 1] = 0;
-//    for (; cursor >= 0; cursor--) {
-//        temporary[cursor] = 0;
-//        for (subcursor = cursor + 1; subcursor < checkerBoard->length * checkerBoard->height; subcursor++) {
-//            if (checkerBoard->checkerBoard[cursor] > checkerBoard->checkerBoard[subcursor]) {
-//                temporary[cursor]++;
-//            }
-//        }
-//    }
-//    for (; cursor > 0; cursor--) {
-//        int status = 1;
-//        for (subcursor = cursor + 1; subcursor < checkerBoard->length * checkerBoard->height; subcursor++) {
-//            if (checkerBoard->checkerBoard[cursor] > checkerBoard->checkerBoard[subcursor]) {
-//                status = 0;
-//                temporary[cursor] = temporary[subcursor] + 1;
-//                break;
-//            }
-//        }
-//        if (1 == status) {
-//            temporary[cursor] = 0;
-//        }
-//    }
     int result = 0 - checkerBoard->zeroPosition;
 //    printf("Result: %d.\n", result);
     for (cursor = 0; cursor < checkerBoard->length * checkerBoard->height; cursor++) {
@@ -385,7 +363,7 @@ void moveInCheckerBoard(struct CheckerBoard* checkerBoard, int target) {
 
 // ======== Method and Test. ========
 int findResultBacktracking(struct CheckerBoard* origin, struct CheckerBoard* target, struct Stack_C* stack) {
-    if (1 == checkEqualCheckerBoard(origin, target)) {
+	if (1 == checkEqualCheckerBoard(origin, target)) {
         return 1;
     }
     if (stack->tail > 255) {
@@ -457,25 +435,11 @@ void testBacktracking_15() {
     struct CheckerBoard* origin = initEmptyCheckerBoard(4, 4);
     struct CheckerBoard* target = initEmptyCheckerBoard(4, 4);
     int cursor = 0;
+	int checker[16] = { 4, 0, 14, 7, 5, 3, 15, 10, 8, 2, 1, 6, 12, 9, 13, 11 };
     for (; cursor < 16; cursor++) {
         origin->checkerBoard[cursor] = cursor;
+		target->checkerBoard[cursor] = checker[cursor];
     }
-    target->checkerBoard[0] = 1;
-    target->checkerBoard[1] = 2;
-    target->checkerBoard[2] = 3;
-    target->checkerBoard[3] = 7;
-    target->checkerBoard[4] = 4;
-    target->checkerBoard[5] = 5;
-    target->checkerBoard[6] = 6;
-    target->checkerBoard[7] = 11;
-    target->checkerBoard[8] = 8;
-    target->checkerBoard[9] = 9;
-    target->checkerBoard[10] = 0;
-    target->checkerBoard[11] = 15;
-    target->checkerBoard[12] = 12;
-    target->checkerBoard[13] = 13;
-    target->checkerBoard[14] = 10;
-    target->checkerBoard[15] = 14;
     searchZeroInCheckerBoard(origin);
     searchZeroInCheckerBoard(target);
     // printCheckerBoard(origin);
@@ -484,7 +448,7 @@ void testBacktracking_15() {
 }
 
 int findResultDFS(struct CheckerBoard* checkerBoard, struct CheckerBoard* target, struct Stack_C* stack) {
-    if (checkEqualCheckerBoard(checkerBoard, target)) {
+    if (1 == checkEqualCheckerBoard(checkerBoard, target)) {
         return 1;
     }
     if (stack->tail > 255) {
@@ -566,30 +530,16 @@ void testDFS_15() {
     struct CheckerBoard* origin = initEmptyCheckerBoard(4, 4);
     struct CheckerBoard* target = initEmptyCheckerBoard(4, 4);
     int cursor = 0;
+	int checker[16] = { 3, 5, 6, 14, 4, 1, 2, 7, 8, 10, 15, 11, 12, 9, 0, 13 };
     for (; cursor < 16; cursor++) {
         origin->checkerBoard[cursor] = cursor;
+		target->checkerBoard[cursor] = checker[cursor];
     }
-    target->checkerBoard[0] = 1;
-    target->checkerBoard[1] = 2;
-    target->checkerBoard[2] = 3;
-    target->checkerBoard[3] = 7;
-    target->checkerBoard[4] = 4;
-    target->checkerBoard[5] = 5;
-    target->checkerBoard[6] = 6;
-    target->checkerBoard[7] = 11;
-    target->checkerBoard[8] = 8;
-    target->checkerBoard[9] = 9;
-    target->checkerBoard[10] = 0;
-    target->checkerBoard[11] = 15;
-    target->checkerBoard[12] = 12;
-    target->checkerBoard[13] = 13;
-    target->checkerBoard[14] = 10;
-    target->checkerBoard[15] = 14;
     searchZeroInCheckerBoard(origin);
     searchZeroInCheckerBoard(target);
     // printCheckerBoard(origin);
     // printCheckerBoard(target);
-    findResultByBacktracking(origin, target);
+    findResultByDFS(origin, target);
 }
 
 int findResultBFS(struct CheckerBoard* target, struct Queue_C* queue, struct Layer* layer, struct Stack_C* stack) {
@@ -674,25 +624,11 @@ void testBFS_15() {
     struct CheckerBoard* origin = initEmptyCheckerBoard(4, 4);
     struct CheckerBoard* target = initEmptyCheckerBoard(4, 4);
     int cursor = 0;
+	int checker[16] = { 4, 1, 2, 3, 8, 5, 6, 7, 12, 9, 10 ,11, 13, 0, 14, 15 };
     for (; cursor < 16; cursor++) {
         origin->checkerBoard[cursor] = cursor;
+		target->checkerBoard[cursor] = checker[cursor];
     }
-    target->checkerBoard[0] = 1;
-    target->checkerBoard[1] = 2;
-    target->checkerBoard[2] = 3;
-    target->checkerBoard[3] = 7;
-    target->checkerBoard[4] = 4;
-    target->checkerBoard[5] = 5;
-    target->checkerBoard[6] = 6;
-    target->checkerBoard[7] = 11;
-    target->checkerBoard[8] = 8;
-    target->checkerBoard[9] = 9;
-    target->checkerBoard[10] = 0;
-    target->checkerBoard[11] = 15;
-    target->checkerBoard[12] = 12;
-    target->checkerBoard[13] = 13;
-    target->checkerBoard[14] = 10;
-    target->checkerBoard[15] = 14;
     searchZeroInCheckerBoard(origin);
     searchZeroInCheckerBoard(target);
     // printCheckerBoard(origin);
@@ -1013,6 +949,7 @@ void testAStar_15() {
     findResultHeuristicAStarAlgorithm(origin, target);
 }
 
+// Visible A and A*.
 void findResultByHeuristic(struct CheckerBoard* checkerBoard, struct CheckerBoard* target, int(*getScore(struct CheckerBoard*, struct CheckerBoard*))) {
 	unsigned long long int times = 0;
 	struct Stack_C* stack = initStack();
@@ -1193,9 +1130,8 @@ void testAStar() {
 }
 
 void testInputAStar() {
-    struct CheckerBoard* origin = NULL; // (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
-    // struct CheckerBoard* target = NULL; // (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
-    printf("Please input origin checkerboard:\n");
+    struct CheckerBoard* origin = NULL;
+	printf("Please input origin checkerboard:\n");
     inputValueInitCheckerBoard(&origin);
     struct CheckerBoard* target = initEmptyCheckerBoard(origin->length, origin->height);
     printf("Please input target checkerboard:\n");
@@ -1268,29 +1204,6 @@ void echoResult(struct Stack_C* stack) {
     for (; cursor < stack->tail; cursor++) {
         printCheckerBoard(stack->stack[cursor]);
     }
-}
-
-void testAStar_temp() {
-	struct CheckerBoard* origin = initEmptyCheckerBoard(3, 3);
-	struct CheckerBoard* target = initEmptyCheckerBoard(3, 3);
-	int cursor = 0;
-	int checker[9] = { 1, 4, 2, 6, 3, 5, 7, 8, 0 };
-	for (; cursor < 9; cursor++) {
-		target->checkerBoard[cursor] = cursor;
-		origin->checkerBoard[cursor] = checker[cursor];
-	}
-	// origin->checkerBoard[0] = 3;
-	// origin->checkerBoard[1] = 5;
-	// origin->checkerBoard[2] = 2;
-	// origin->checkerBoard[3] = 7;
-	// origin->checkerBoard[4] = 1;
-	// origin->checkerBoard[5] = 4;
-	// origin->checkerBoard[6] = 8;
-	// origin->checkerBoard[7] = 6;
-	// origin->checkerBoard[8] = 0;
-	searchZeroInCheckerBoard(origin);
-	searchZeroInCheckerBoard(target);
-	findResultHeuristicAStarAlgorithm(origin, target);
 }
 
 void testHeuristicVisible() {
