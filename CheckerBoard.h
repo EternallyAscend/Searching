@@ -113,9 +113,10 @@ void testAStar_8();
 
 void testAStar_15();
 
-void findResultByHeuristic(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+// Visible A and A*.
+void findResultByHeuristic(struct CheckerBoard* checkerBoard, struct CheckerBoard* target, int(*getScore(struct CheckerBoard*, struct CheckerBoard*)));
 
-void findResultByRandom(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+void getVisible();
 
 void testing();
 
@@ -134,5 +135,7 @@ void testInputAStar();
 void testRandomAStar();
 
 void echoResult(struct Stack_C* stack);
+
+void testHeuristicVisible();
 
 #endif //AI_SEARCHING_CHECKERBOARD_H
