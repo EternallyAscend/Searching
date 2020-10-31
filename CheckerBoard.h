@@ -103,6 +103,8 @@ void findResultHeuristicAAlgorithm(struct CheckerBoard* checkerBoard, struct Che
 
 void testA_8();
 
+void testA_Back_8();
+
 void testA_15();
 
 int aStarAlgorithm(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
@@ -111,12 +113,16 @@ void findResultHeuristicAStarAlgorithm(struct CheckerBoard* checkerBoard, struct
 
 void testAStar_8();
 
+void testAStar_Back_8();
+
 void testAStar_15();
 
-void findResultByHeuristic(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+// Visible A and A*.
+void findResultByHeuristic(struct CheckerBoard* checkerBoard, struct CheckerBoard* target, int(*getScore(struct CheckerBoard*, struct CheckerBoard*)));
 
-void findResultByRandom(struct CheckerBoard* checkerBoard, struct CheckerBoard* target);
+void getVisible();
 
+// ======== Test Functions ========
 void testing();
 
 void testBackTracking();
@@ -135,4 +141,7 @@ void testRandomAStar();
 
 void echoResult(struct Stack_C* stack);
 
+void testHeuristicVisible();
+
 #endif //AI_SEARCHING_CHECKERBOARD_H
+
