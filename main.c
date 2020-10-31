@@ -1,50 +1,87 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include"Queue_C.h"
-#include"Stack_C.h"
-#include"MinHeap_C.h"
+#define QUIT 9
+#include <stdio.h>
+#include <stdlib.h>
+#include "CheckerBoard.h"
 
-int main(void) {
-//	testQueue();
-//	testStack();
-//	testBacktracking_15();
-//	system("pause");
-	testBacktracking_8();
-	system("pause");
-	testBFS_15();
-	system("pause");
-//	testBFS_8();
-//	system("pause");
-//	testA_8();
-//	system("pause");
-	testA_15();
-	system("pause");
-//	testAStar_8();
-//	system("pause");
-	testAStar_15();
-	system("pause");
+// Here is only test logic, algorithms are in CheckerBoard.h / CheckerBoard.c in detail.
 
-	/*
-	struct CheckerBoard* origin = (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
-	struct CheckerBoard* target = (struct CheckerBoard*)malloc(sizeof(struct CheckerBoard));
-	initCheckerBoard(3, 3, origin);
-	initCheckerBoard(3, 3, target);
-	int cursor = 0;
-	for (; cursor < 9; cursor++) {
-		origin->checkerBoard[cursor] = cursor;
-		target->checkerBoard[cursor] = 8 - cursor;
-	}
-	searchZeroInCheckerBoard(origin);
-	searchZeroInCheckerBoard(target);
-	printCheckerBoard(origin);
-	printf("\n");
-	printCheckerBoard(target);
-	printf("\n %d %d\n", origin->zeroPosition, target->zeroPosition);
-	findResultByDFS(origin, target);
-	destroyCheckerBoard(origin);
-	destroyCheckerBoard(target);
-	*/
-
-//	testMinHeap();
-	return 0;
+void printTitle() {
+	printf(" __________________\n");
+    printf(" AI Searching Test.\n");
+    printf(" ------------------\n");
+    printf(" [0] Example Cases.\n");
+    printf(" [1] Back Tracking.\n");
+    printf(" [2] DFS Searching.\n");
+    printf(" [3] BFS Searching.\n");
+    printf(" [4]   A Algorithm.\n");
+    printf(" [5] A * Algorithm.\n");
+    printf(" [6] Input Test A*.\n");
+    printf(" [7] Random Use A*.\n");
+	printf(" [8] Visible A, A*.\n");
+    printf(" [9] Exit the Test.\n");
+    printf(" ------------------\n");
 }
+
+int main() {
+    printf(" Nankai University.\n");
+    printf(" 1813045 YuHailong.");
+    system("cls");
+    printTitle();
+	printf(" Please select: ");
+    int operator;
+    scanf("%d", &operator);
+    while (QUIT != operator) {
+        switch (operator) {
+            case 0:
+                printf(" Run Example Cases.\n");
+                testing();
+                break;
+            case 1:
+                printf(" Run Back Tracking.\n");
+                testBackTracking();
+                break;
+            case 2:
+                printf(" Run DFS Searching.\n");
+                testDFS();
+                break;
+            case 3:
+                printf(" Run BFS Searching.\n");
+                testBFS();
+                break;
+            case 4:
+                printf(" Run A Algorithm.  \n");
+                testA();
+                break;
+            case 5:
+                printf(" Run A* Algorithm. \n");
+                testAStar();
+                break;
+            case 6:
+                printf(" Run Input Test A*.\n");
+                testInputAStar();
+                break;
+            case 7:
+                printf(" Run Random Use A*.\n");
+                testRandomAStar();
+                break;
+			case 8:
+				printf(" Run Visible A / A*.\n");
+				testHeuristicVisible();
+				break;
+            default:
+                // printf("Wrong command, please check.\n");
+                // printTitle();
+                printf(" Wrong command, run default example.\n");
+                testing();
+                break;
+        }
+		printTitle();
+		printf(" Please select: ");
+        scanf("%d", &operator);
+        // operator = QUIT;
+    }
+    printf(" Exit the Test.\n");
+    return 0;
+}
+
+
