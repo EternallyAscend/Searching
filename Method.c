@@ -51,7 +51,7 @@ struct Method* copyMethod(struct Method* method) {
 }
 
 int destroyMethod(struct Method* method) {
-    if (isNullMethod(method)) {
+    if (1 == isNullMethod(method)) {
         return 0;
     }
     destroyStackOnly(method->stack);

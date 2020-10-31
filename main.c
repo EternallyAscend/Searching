@@ -45,7 +45,7 @@ void testAStar_temp() {
 //    printCheckerBoard(origin);
 //    printf("\n");
 //    printCheckerBoard(target);
-//    findResultHeuristicAStarAlgorithm(origin, target);
+    findResultHeuristicAStarAlgorithm(origin, target);
 //    findResultByDFS(origin, target);
 //    findResultByBFS(origin, target);
 //    findResultByBacktracking(origin, target);
@@ -55,7 +55,8 @@ int main() {
 //    struct CheckerBoard* checkerBoard = NULL;
 //    inputValueInitCheckerBoard(&checkerBoard);
 //    printCheckerBoard(checkerBoard);
-//    system("pause");
+//    testAStar_temp();
+    // system("pause");
     printf("Nankai University.\n");
     printf("1813045 YuHailong.");
     system("cls");
@@ -103,8 +104,8 @@ int main() {
                 testing();
                 break;
         }
-        // scanf("%d", &operator);
-        operator = QUIT;
+        scanf("%d", &operator);
+        // operator = QUIT;
     }
     printf("Exit the Test.\n");
     return 0;
