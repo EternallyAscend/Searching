@@ -6,7 +6,7 @@
 // Here is only test logic, algorithms are in CheckerBoard.h / CheckerBoard.c in detail.
 
 void printTitle() {
-	printf(" __________________\n");
+    printf(" __________________\n");
     printf(" AI Searching Test.\n");
     printf(" ------------------\n");
     printf(" [0] Example Cases.\n");
@@ -23,11 +23,11 @@ void printTitle() {
 }
 
 int main() {
-    printf(" Nankai University.\n");
-    printf(" 1813045 YuHailong.");
-    system("cls");
+    // printf(" Nankai University.\n");
+    // printf(" 1813045 YuHailong.\n");
+    // system("cls");
     printTitle();
-	printf(" Please select: ");
+    printf(" Please select: ");
     int operator;
     scanf("%d", &operator);
     while (QUIT != operator) {
